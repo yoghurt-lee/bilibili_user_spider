@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-AAA
-=======
-# bilibili_user_spider
->>>>>>> 8ae7c2986d71c09b7a93b603d61ff7ad4d688c40
+### bilibili用户爬虫
+- 抓取b站用户
+- 并行爬取
+- 将数据写入MySQL
