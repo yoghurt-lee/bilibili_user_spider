@@ -47,6 +47,7 @@ def writeintoMySQL(data):
             raise e
         
 def getuserInfo(mid):
+    sleep(random.uniform(2,5))
     submit_data = {'mid':mid,'_':time.time()*1000}
     headers['Referer'] = Referer_url+str(mid)
     num = random.randint(0,7)
@@ -70,19 +71,14 @@ def createDB():
 def start():
     from multiprocessing.dummy import Pool
     pool = Pool(processes=2)
-    ids = range(1,300)
-    try:
-        pool.map(getuserInfo,ids)
-    except Exception as e:
-        raise e
-        sleep(300)
-        pool.map(getuserInfo,ids)
+    ids = range(300,1000)
+    pool.map(getuserInfo,ids)
     pool.close()
     pool.join()
 
 def closedb():
     conn.close()
 if __name__ == '__main__':
-    createDB() #if don't exist database and table,use this method to create;
+    #createDB() #if don't exist database and table,use this method to create;
     start()
     closedb()
