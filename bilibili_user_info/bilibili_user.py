@@ -23,7 +23,11 @@ headers = {
 Referer_url = 'http://space.bilibili.com/'
 url = 'http://space.bilibili.com/ajax/member/GetInfo'
 conn = MySQLdb.connect(host='localhost', user='root', passwd='helloworld', port=3306,db='bilibili_user',charset='utf8')
-
+#代理IP
+proxies = {
+        'http': '120.52.72.52:80',
+        'https': '106.46.136.73:808',
+}
 def writeintoMySQL(data):
     if data.get('status') is True:
         data = data['data']
@@ -52,7 +56,7 @@ def getuserInfo(mid):
     headers['Referer'] = Referer_url+str(mid)
     num = random.randint(0,7)
     headers['User-Agent'] = Headers[num]
-    data = requests.post(url=url,headers=headers, data=submit_data).content
+    data = requests.post(url=url,headers=headers, data=submit_data,proxies = proxies).content
     if data is None: return
     data = json.loads(data)
     writeintoMySQL(data)
@@ -71,7 +75,7 @@ def createDB():
 def start():
     from multiprocessing.dummy import Pool
     pool = Pool(processes=2)
-    ids = range(300,1000)
+    ids = range(779,3000) 
     pool.map(getuserInfo,ids)
     pool.close()
     pool.join()
